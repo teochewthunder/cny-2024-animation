@@ -145,51 +145,73 @@
 						$("#container").append(row);
 					}
 				},
-				getColor: function(transparency)
+				getColor: function(transparency, original)
 				{
 					var t = [0, 1, 0.7, 0.3];
 
-					return "rgba(" + this.getRandomColorComponent(0) + "," + this.getRandomColorComponent(1) + "," + this.getRandomColorComponent(2) + "," + t[transparency] + ")";
+					return "rgba(" + this.getRandomColorComponent(0, original) + "," + this.getRandomColorComponent(1, original) + "," + this.getRandomColorComponent(2, original) + "," + t[transparency] + ")";
 				},
-				getRandomColorComponent: function(index)
+				getRandomColorComponent: function(index, original)
 				{
 					var bgColor = [200, 100, 0];
-					var fgColor = [255, 155, 0];
+					var fgColor = [255, 100, 0];
 
+					if (original) return fgColor[index];
 					if (bgColor[index] == fgColor[index]) return bgColor[index];
 
-					return bgColor[index] + (Math.floor(Math.random() * (fgColor[index] - bgColor[index])) + 1);
+					return bgColor[index] + (Math.floor(Math.random() * (fgColor[index] - bgColor[index]) ) + 1);
 				},
-				changeColor: function()
+				changeColor: function(delay)
 				{
 					for (var i = 1; i <= 3; i++)
 					{
 						$(".shade" + i).each(
 							function( index ) 
 							{
-						  		cny.changeColorForObj(this, i);
+						  		cny.changeColorForObj(this, i, delay);
 							}
 						);						
 					}
-
 				},
-				changeColorForObj: function(obj, index)
+				changeColorForObj: function(obj, index, delay)
 				{
-					var color = this.getColor(index);
-
 					$(obj).animate
 					(
 						{
-							backgroundColor: color
+							backgroundColor: cny.getColor(index, false)
 						},
-						500
+						delay
 					);
+
+					setTimeout(
+						function() 
+						{
+							$(obj).animate
+							(
+								{
+									backgroundColor: cny.getColor(index, true)
+								},
+								delay
+							);
+						},
+						delay
+					)
+				},
+				start: function(delay)
+				{
+					setInterval(
+						function() 
+						{
+							cny.changeColor(delay)
+						},
+						delay * 2
+					)
 				}
 			}
 		</script>
 	</head>
 
-	<body onload = "cny.fillGrid();cny.changeColor();">
+	<body onload = "cny.fillGrid();cny.start(1000);">
 		<div id="container">
 
 		</div>
