@@ -148,18 +148,19 @@
 				getColor: function(transparency, original)
 				{
 					var t = [0, 1, 0.7, 0.3];
+					var useT = t[transparency];
 
-					return "rgba(" + this.getRandomColorComponent(0, original) + "," + this.getRandomColorComponent(1, original) + "," + this.getRandomColorComponent(2, original) + "," + t[transparency] + ")";
-				},
-				getRandomColorComponent: function(index, original)
-				{
-					var bgColor = [200, 100, 0];
-					var fgColor = [255, 100, 0];
+					if (!original) 
+					{
+						if (useT > 0)
+						{
+							var subtract = (Math.floor(Math.random() * 10) + 1) / 10;
+							useT -= subtract;
+							if (useT < 0) useT = 0;
+						}
+					}
 
-					if (original) return fgColor[index];
-					if (bgColor[index] == fgColor[index]) return bgColor[index];
-
-					return bgColor[index] + (Math.floor(Math.random() * (fgColor[index] - bgColor[index]) ) + 1);
+					return "rgba(rgba(255, 155, 0, " + useT + ")";
 				},
 				changeColor: function(delay)
 				{
@@ -211,7 +212,7 @@
 		</script>
 	</head>
 
-	<body onload = "cny.fillGrid();cny.start(1000);">
+	<body onload = "cny.fillGrid();cny.start(500);">
 		<div id="container">
 
 		</div>
