@@ -30,7 +30,7 @@
 				float: left;
 			}
 
-			.shade0
+/*			.shade0
 			{
 				background-color: transparent;
 			}
@@ -48,7 +48,7 @@
 			.shade3
 			{
 				background-color: rgba(255, 155, 0, 0.3);
-			}
+			}*/
 		</style>
 
 		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -169,7 +169,8 @@
 						$(".shade" + i).each(
 							function( index ) 
 							{
-						  		cny.changeColorForObj(this, i, delay);
+								var newDelay = delay - ((Math.floor(Math.random() * delay) + 1) / 2) ;
+						  		cny.changeColorForObj(this, i, newDelay);
 							}
 						);						
 					}
@@ -192,27 +193,29 @@
 								{
 									backgroundColor: cny.getColor(index, true)
 								},
-								delay
+								delay * 2
 							);
 						},
-						delay
+						delay * 2
 					)
 				},
 				start: function(delay)
 				{
+					cny.changeColor(delay)
+
 					setInterval(
 						function() 
 						{
 							cny.changeColor(delay)
 						},
-						delay * 2
+						delay * 3
 					)
 				}
 			}
 		</script>
 	</head>
 
-	<body onload = "cny.fillGrid();cny.start(500);">
+	<body onload = "cny.fillGrid();cny.start(1000);">
 		<div id="container">
 
 		</div>
