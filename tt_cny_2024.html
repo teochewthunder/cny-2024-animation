@@ -11,8 +11,9 @@
 
 			#container
 			{
-/*				background: url(dragon.png);
-*/				width: 500px;
+				/*background: url(dragon.png);*/
+				width: 500px;
+				height: 650px;
 				margin: 10px auto 0 auto;
 			}
 
@@ -20,6 +21,7 @@
 			{
 				height: 10px;
 				width: 100%;
+				outline: 0px solid red;
 			}
 
 			.square
@@ -28,6 +30,21 @@
 				height: 10px;
 				outline: 0px solid red;
 				float: left;
+			}
+
+			.shade1
+			{
+				background-color: rgba(255, 155, 0, 1);
+			}
+
+			.shade2
+			{
+				background-color: rgba(255, 155, 0, 0.5);
+			}
+
+			.shade3
+			{
+				background-color: rgba(255, 155, 0, 0.2);
 			}
 
 			#text
@@ -146,23 +163,6 @@
 						$("#container").append(row);
 					}
 				},
-				getColor: function(transparency, original)
-				{
-					var t = [0, 1, 0.7, 0.3];
-					var useT = t[transparency];
-
-					if (!original) 
-					{
-						if (useT > 0)
-						{
-							var subtract = (Math.floor(Math.random() * 10) + 1) / 10;
-							useT -= subtract;
-							if (useT < 0) useT = 0;
-						}
-					}
-
-					return "rgba(rgba(255, 155, 0, " + useT + ")";
-				},
 				changeColor: function(delay)
 				{
 					for (var i = 1; i <= 3; i++)
@@ -200,14 +200,31 @@
 						delay * 2
 					)
 				},
+				getColor: function(transparency, original)
+				{
+					var t = [0, 1, 0.5, 0.2];
+					var useT = t[transparency];
+
+					if (!original) 
+					{
+						if (useT > 0)
+						{
+							var subtract = (Math.floor(Math.random() * 10) + 1) / 10;
+							useT -= subtract;
+							if (useT < 0) useT = 0;
+						}
+					}
+
+					return "rgba(rgba(255, 155, 0, " + useT + ")";
+				},
 				start: function(delay)
 				{
-					cny.changeColor(delay)
+					cny.changeColor(delay);
 
 					setInterval(
 						function() 
 						{
-							cny.changeColor(delay)
+							cny.changeColor(delay);
 						},
 						delay * 3
 					)
